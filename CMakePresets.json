@@ -1,0 +1,198 @@
+{
+	"version" : 3,
+	"configurePresets": [
+	{
+		"name" : "default",
+		"hidden" : true,
+		"binaryDir" : "${sourceDir}/build",
+		"description" : "Default rules and variables",
+		"cacheVariables" : {
+			"BUILD_TESTS" : "ON",
+			"OE_DONT_CHECK_BUILD_PATH" : "TRUE",
+			"CONDA_CONFIG_ENV" : "open_ephys_deps.yml"
+		}
+	},
+	{
+		"name" : "apple-default",
+		"hidden" : true,
+		"description" : "macOS-specific variables ",
+		"generator" : "Xcode",
+		"cacheVariables" : {
+			"CMAKE_OSX_ARCHITECTURES" : "x86_64",
+			"CONDA_ADDITIONAL_ARGS" : "-p CONDA_SUBDIR=osx-64"
+		},
+		"condition" : {
+			"type" : "equals",
+			"lhs": "${hostSystemName}",
+			"rhs": "Darwin"
+		}
+	},
+	{
+		"name" : "linux-default",
+		"hidden" : true,
+		"description" : "Linux-specific variables ",
+		"generator" : "Unix Makefiles",
+		"cacheVariables" : {
+			"CMAKE_BUILD_TYPE" : "Debug"
+		},
+		"condition" : {
+			"type" : "equals",
+			"lhs": "${hostSystemName}",
+			"rhs": "Linux"
+		}
+	},
+	{
+		"name" : "windows-default",
+		"hidden" : true,
+		"description" : "Windows-specific variables ",
+		"architecture" : "x64",
+		"generator" : "Visual Studio 17 2022",
+		"cacheVariables" : {
+		},
+		"condition" : {
+			"type" : "equals",
+			"lhs": "${hostSystemName}",
+			"rhs": "Windows"
+		}
+	},
+	{
+		
+		"name": "all-targets",
+		"displayName" : "All Monorepo Targets",
+		"hidden" : true,
+		"cacheVariables": {
+			"BUILD_PLUGIN_GUI" : "ON",
+			"BUILD_DATA_SNAPSHOT" : "ON"
+		}	
+	},
+	{
+		"name": "oe-all-targets",
+		"displayName" : "Open Ephys Targets",
+		"hidden" : true,
+		"cacheVariables": {
+			"BUILD_PLUGIN_GUI" : "ON",
+			"BUILD_DATA_SNAPSHOT" : "ON"
+		}
+	},
+	{
+
+		"name": "oe-all-apple",
+		"displayName" : "All Open Ephys Components (Apple)",
+		"binaryDir" : "${sourceDir}/build",
+		"inherits" : [
+			"default",
+			"apple-default",
+			"oe-all-targets"
+		]
+	},
+	{
+
+		"name": "oe-all-apple-ninja-debug",
+		"displayName" : "All Open Ephys Components (Apple CLion Debug)",
+		"binaryDir" : "${sourceDir}/build/debug",
+		"generator": "Ninja",
+		"inherits" : [
+			"oe-all-apple"
+		],
+		"cacheVariables": {
+			"ERASE_CMAKE_OSX_SYSROOT" : "OFF",
+			"CMAKE_BUILD_TYPE" : "Debug"
+		}
+	},
+	{
+
+		"name": "oe-all-apple-ninja-release",
+		"displayName" : "All Open Ephys Components Release (Apple CLion Release)",
+		"binaryDir" : "${sourceDir}/build/release",
+		"generator": "Ninja",
+		"inherits" : [
+			"oe-all-apple"
+		],
+		"cacheVariables": {
+			"ERASE_CMAKE_OSX_SYSROOT" : "OFF",
+			"CMAKE_BUILD_TYPE" : "Release"
+		}
+	},
+	{
+
+		"name": "oe-all-linux",
+		"displayName" : "All Open Ephys Components (Linux)",
+		"binaryDir" : "${sourceDir}/build",
+		"inherits" : [
+			"default",
+			"linux-default",
+			"oe-all-targets"
+		]
+	},
+	{
+
+		"name": "oe-all-windows",
+		"displayName" : "All Open Ephys Components (Windows)",
+		"binaryDir" : "${sourceDir}/build",
+		"inherits" : [
+			"default",
+			"windows-default",
+			"oe-all-targets"
+		]
+	},
+	{
+
+		"name": "all-apple",
+		"displayName" : "All Monorepo Components (Apple)",
+		"binaryDir" : "${sourceDir}/build",
+		"inherits" : [
+			"default",
+			"apple-default",
+			"all-targets"
+		]
+	},
+	{
+		"name": "all-apple-ninja-debug",
+		"displayName" : "All Monorepo Components (Apple CLion Debug)",
+		"binaryDir" : "${sourceDir}/build/debug",
+		"generator": "Ninja",
+		"inherits" : [
+			"all-apple"
+		],
+		"cacheVariables": {
+			"ERASE_CMAKE_OSX_SYSROOT" : "OFF",
+			"CMAKE_BUILD_TYPE" : "Debug"
+		}
+	},
+	{
+		"name": "all-apple-ninja-release",
+		"displayName" : "All Monorepo Components (Apple CLion Release)",
+		"binaryDir" : "${sourceDir}/build/release",
+		"generator": "Ninja",
+		"inherits" : [
+			"all-apple"
+		],
+		"cacheVariables": {
+			"ERASE_CMAKE_OSX_SYSROOT" : "OFF",
+			"CMAKE_BUILD_TYPE" : "Release"
+		}
+	},
+	{
+
+		"name": "all-linux",
+		"displayName" : "All Monorepo Components (Linux)",
+		"binaryDir" : "${sourceDir}/build",
+		"inherits" : [
+			"default",
+			"linux-default",
+			"all-targets"
+		]
+	},
+	{
+
+		"name": "all-windows",
+		"displayName" : "All Monorepo Components (Windows)",
+		"binaryDir" : "${sourceDir}/build",
+		"inherits" : [
+			"default",
+			"windows-default",
+			"all-targets"
+		]
+	}
+	]
+}
