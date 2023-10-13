@@ -1,0 +1,6 @@
+[submodule "plugin-GUI"]
+	path = plugin-GUI
+	url = https://github.com/open-ephys/plugin-GUI
+[submodule "data-snapshot"]
+	path = plugins/data-snapshot
+	url = https://github.com/open-ephys-plugins/data-snapshot
